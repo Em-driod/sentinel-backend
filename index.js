@@ -21,7 +21,13 @@ const JWT_SECRET = process.env.JWT_SECRET;
 const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY;
 
 // MIDDLEWARE
-app.use(cors());
+app.options('*', cors());
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "https://sentinal-ai-kappa.vercel.app/"],
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 // DATABASE CONNECTION
@@ -67,7 +73,8 @@ app.post("/api/auth/register", async (req, res) => {
     const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: "1d" });
     res.json({ id: user._id, email: user.email, role: user.role, token });
   } catch (e) {
-    res.status(500).json({ error: "Registration failed" });
+    console.log(e);
+    res.status(500).json({ error: "Registration failed", message: e.toString() });
   }
 });
 
@@ -83,7 +90,8 @@ app.post("/api/auth/login", async (req, res) => {
     const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: "1d" });
     res.json({ id: user._id, email: user.email, role: user.role, token });
   } catch (e) {
-    res.status(500).json({ error: "Login failed" });
+    console.log(e);
+    res.status(500).json({ error: "Login failed", message: e.toString() });
   }
 });
 
