@@ -24,7 +24,7 @@ const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY;
 app.options('*', cors());
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://sentinal-ai-kappa.vercel.app/"],
+    origin: ["http://localhost:3000", "https://sentinal-ai-kappa.vercel.app"],
     credentials: true,
   })
 );
